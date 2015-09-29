@@ -498,14 +498,27 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+
+var calStart = false,
+    sinVariable = 0;
+
+
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  var currentSinVar = sinVariable;
+  var items = document.getElementsByClassName('mover');
+
+  // Set array of phases to reduce layout calls
+  var phases = [];
+  for(var i=0; i<5; i++){
+    phases[i] = Math.sin(currentSinVar + (i % 5));
+  }
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    var pizzaPosition = items[i].basicLeft + 100 * phases[i % 5] - 1250 + 'px';
+    items[i].style.transform = 'translateX(' + pizzaPosition + ')';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -518,14 +531,23 @@ function updatePositions() {
   }
 }
 
+function onScroll(){
+  if(!calStart){
+    sinVariable = document.body.scrollTop / 1250;
+  }else{
+    calStart = true;
+  }
+  requestAnimationFrame(updatePositions);
+}
+
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', onScroll, false);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 25; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -535,5 +557,5 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  updatePositions();
+  requestAnimationFrame(updatePositions);
 });
