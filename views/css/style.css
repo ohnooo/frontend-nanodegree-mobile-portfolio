@@ -33,6 +33,10 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
+<<<<<<< HEAD
+=======
+  will-change: transform;
+>>>>>>> origin/gh-pages
 }
 
 .randomPizzaContainer {
