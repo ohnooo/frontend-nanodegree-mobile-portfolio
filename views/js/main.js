@@ -498,24 +498,15 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
-<<<<<<< HEAD
-=======
 
 var calStart = false,
     sinVariable = 0;
 
 
->>>>>>> origin/gh-pages
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-<<<<<<< HEAD
-  var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-=======
   var currentSinVar = sinVariable;
   var items = document.getElementsByClassName('mover');
 
@@ -528,7 +519,6 @@ function updatePositions() {
   for (var i = 0; i < items.length; i++) {
     var pizzaPosition = items[i].basicLeft + 100 * phases[i % 5] - 1250 + 'px';
     items[i].style.transform = 'translateX(' + pizzaPosition + ')';
->>>>>>> origin/gh-pages
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -541,32 +531,23 @@ function updatePositions() {
   }
 }
 
-<<<<<<< HEAD
-// runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
-=======
 function onScroll(){
-  if(!calStart){
-    sinVariable = document.body.scrollTop / 1250;
-  }else{
-    calStart = true;
-  }
+  // removed from updatePosition for loop to onScroll function.  Avoid force sync error.
+  sinVariable = document.body.scrollTop / 1250;
+
+  // requestAnimation to boost speed
   requestAnimationFrame(updatePositions);
+
 }
 
 // runs updatePositions on scroll
 window.addEventListener('scroll', onScroll, false);
->>>>>>> origin/gh-pages
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-<<<<<<< HEAD
-  for (var i = 0; i < 200; i++) {
-=======
   for (var i = 0; i < 25; i++) {
->>>>>>> origin/gh-pages
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -576,9 +557,5 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-<<<<<<< HEAD
-  updatePositions();
-=======
   requestAnimationFrame(updatePositions);
->>>>>>> origin/gh-pages
 });
