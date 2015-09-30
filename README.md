@@ -29,3 +29,26 @@ views/js/main.js
 
 4. LINE 453 -- changePizzaSizes()
   Remove determinDX as it is not needed. Added switch statment to changePizzaSize as the size is given from changeSliderLabel. changePizzaSize can apply the new style to the element.
+
+
+### Getting started
+
+1. Open terminal
+
+  ```bash
+  $> cd /path/to/your-project-folder
+  $> python -m SimpleHTTPServer 8080
+  ```
+
+1. Open a browser and visit localhost:8080
+2. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+3. Open another terminal
+
+
+  ``` bash
+  $> cd /path/to/your-project-folder
+  $> ./ngrok 8080
+  ```
+
+Or just click on GitHub Page: http://ohnooo.github.io/frontend-nanodegree-mobile-portfolio/
+
